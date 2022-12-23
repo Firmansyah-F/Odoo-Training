@@ -1,0 +1,35 @@
+<odoo>
+    <record id="service_service_category" model="ir.module.category">
+        <field name="name">Service</field>
+        <field name="sequence">1</field>
+        <field name="description">Category Service</field>
+    </record>
+
+    <record id="service_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="service_service_category"/>
+        <field name="implied_ids" eval="[(4, ref('xti_training.service_officer')),
+                                        (4, ref('xti_training.service_user')),]"/>
+        <field name="menu_access" eval="[(4, ref('xti_training.car_menu')),
+                                        ]"/>
+    </record>
+
+    
+    <record id="service_officer" model="res.groups">
+        <field name="name">Officer</field>
+        <field name="implied_ids" eval="[(4, ref('xti_training.service_user')),]"/>
+        <field name="category_id" ref="service_service_category"/>
+    </record>
+
+    <record id="service_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="service_service_category"/>
+    </record>
+
+    <record id="responsible_record_rule" model="ir.rule">
+        <field name="name">See Only Responsible Data</field>
+        <field name="model_id" ref="model_service_service"/>
+        <field name="domain_force">[('responsible_id', '=', user.id)]</field>
+    </record>
+
+</odoo>
