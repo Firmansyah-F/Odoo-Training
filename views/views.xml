@@ -1,0 +1,162 @@
+<odoo>
+  <data>
+        <record id="inherit_sale_order_from" model="ir.ui.view">
+            <field name="name">Inherit Sale Order Form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <button name="action_confirm" position="after">
+                    <button name="button_inherit_function"
+                            type="object" 
+                            class="oe_highlight"
+                            string="Function Inherit"/>  
+                </button>
+
+                <field name="partner_id" position="after">
+                    <field name="service_id"/>
+                </field>
+
+                <xpath expr="//field[@name='validity_date']" position="before">
+                    <field name="description" placeholder="Description"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="service_service_form" model="ir.ui.view">
+          <field name="name">Service Form View</field>
+          <field name="model">service.service</field>
+          <field name="arch" type="xml">
+              <form string="Service Form">
+                    <header>
+                        <button name="open_wizard"
+                                type="object" 
+                                class="oe_highlight"
+                                string="Open Wizard"/>
+
+                        
+                        <button name="button_in_progress"
+                                type="object" 
+                                class="oe_highlight"
+                                string="in Progress"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                    </header>
+                    <sheet>
+                      <div class="oe_title">
+                          <h2>
+                              <field name="name"/>
+                          </h2>
+                      </div>
+                      <group>
+                          <group name="customer_details" string="Customer Details">
+                              <field name="customer_id"/>
+                              <field name="phone"/>
+                              <field name="email"/>
+                          </group>
+                          
+                          <group name="responsible_details" string="Responsible Details">
+                              <field name="responsible_id"/>
+                              <field name="is_mandatory" groups="xti_training.service_manager"/>
+                              <field name="description"/>
+                          </group>
+                      </group>
+
+                      <notebook>
+                            <page name="service_line_ids" string="Service Line">
+                                <field name="service_line_ids" editable="bottom">
+                                    <tree string="Service Item" editable="bottom">
+                                        <field name="service_id" invisible="1"/>
+                                        <field name="car_id"/>
+                                        <field name="car_type_id"/>
+                                        <field name="name"/>
+                                        <field name="quantity"/>
+                                        <field name="price_unit"/>
+                                        <field name="price_subtotal"/>
+                                    </tree>
+                                </field>
+                            </page>
+                      </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+              </form>
+          </field>
+      </record>
+
+        <record id="service_service_kanban" model="ir.ui.view">
+            <field name="name">Service Kanban</field>
+            <field name="model">service.service</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" sample="1">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div>
+                                    <strong><field name="name"/></strong>
+                                </div>
+                                <div>
+                                    <span><field name="customer_id"/>&amp;nbsp;</span>
+                                    <span><field name="phone"/>&amp;nbsp;</span>
+                                    <span><field name="email"/></span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="service_service_search" model="ir.ui.view">
+            <field name="name">Service Search</field>
+            <field name="model">service.service</field>
+            <field name="arch" type="xml">
+                <search string="Search Service">
+                    <field name="name" string="Service Number"/>
+                    <field name="customer_id" string="Customer"/>
+                    <field name="phone" string="Phone Number"/>
+                    <field name="email" string="Email"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="service_service_tree" model="ir.ui.view">
+            <field name="name">Service Tree View</field>
+            <field name="model">service.service</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="customer_id"/>
+                    <field name="phone"/>
+                    <field name="email"/>
+                    <field name="responsible_id"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="service_service_action" model="ir.actions.act_window">
+            <field name="name">Service Orders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">service.service</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="service_service_tree"/>
+            <!-- <field name="search_view_id" ref="service_service_search"/> -->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Service Found. Let's create one!
+                </p><p>
+                </p>
+            </field>
+        </record>
+
+
+        <menuitem id="service_menu_root" 
+                  name="Service"
+                  sequence="1"/>
+
+                
+  </data>
+</odoo>

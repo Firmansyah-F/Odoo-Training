@@ -1,0 +1,64 @@
+<odoo>
+  <data>
+        <record id="car_car_form" model="ir.ui.view">
+            <field name="name">Car Form View</field>
+            <field name="model">car.car</field>
+            <field name="arch" type="xml">
+                <form string="Service Form">
+                    <sheet>
+                        <div class="oe_title">
+                            <h2>
+                                <field name="name"/>
+                            </h2>
+                        </div>
+                        <button name="xml_rpc_create_service"
+                                string="Create Service"
+                                type="object"
+                                class="oe_highlight"/>
+                        <group>
+                            <group name="Type">
+                                <field name="car_type_id" options="{'no_create':True,'no_create_edit':True}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="car_car_tree" model="ir.ui.view">
+            <field name="name">Car Tree View</field>
+            <field name="model">car.car</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="car_type_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="car_car_action" model="ir.actions.act_window">
+            <field name="name">Car</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">car.car</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Cars Found. Let's create one!
+                </p><p>
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="car_menu" 
+                  name="Car List"
+                  parent="xti_training.service_menu_root" 
+                  sequence="2" 
+                  action="car_car_action"/>
+
+        <menuitem id="service_menu" 
+                          name="Service Orders"
+                          parent="xti_training.service_menu_root" 
+                          sequence="1" 
+                          action="service_service_action"/> 
+  </data>
+</odoo>

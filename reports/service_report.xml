@@ -1,0 +1,173 @@
+<odoo>
+    <report id="xti_training.service_report_menu"
+            string="Service PDF"
+            model="service.service"
+            report_type="qweb-pdf"
+            name="xti_training.service_printout_template_pdf"
+            file="xti_training.service_printout_template_pdf"
+            print_report_name="'Service Printout - %s' % (object.name or '')"/>
+    
+    <template id="xti_training.service_printout_template_pdf">
+		<t t-call="web.html_container">
+            <div class="page">
+                <t t-foreach="docs" t-as="data">
+                    <t t-call="web.external_layout">
+                        <div class="oe_structure"/>
+                        <div align="center" valign="center">
+                            <h6>SERVICE REPORT</h6>
+                        </div>
+
+                        <div>
+                            <table style="width: 100%">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 50%">
+                                            <table style="width: 100%;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="text-align:left;font-size:14px;padding-left:12px;"><strong>Customer</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding-left:12px;font-size:14px;">
+                                                            <t t-esc="data.customer_id.name"/> 
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding-left:12px;font-size:14px;">
+                                                            <t t-esc="data.phone"/> 
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="padding-left:12px;font-size:14px;">
+                                                            <t t-esc="data.email"/> 
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                        <td style="width: 50%">
+                                            <table style="width: 100%;">
+                                                <tbody>
+                                                    <tr>
+                                                        <td style="padding-left:1px;font-weight:bold;font-size:14px;">
+                                                            Responsible
+                                                        </td>
+                                                        <td style="padding-left:1px;font-size:14px;">
+                                                            :
+                                                        </td>
+                                                        <td style="padding-left:5px;font-size:14px;">
+                                                            <t t-esc="data.responsible_id.name"/>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                    <t t-if="data.is_mandatory">
+                                                        <tr>
+                                                            <td style="padding-left:1px;font-weight:bold;font-size:14px;">
+                                                                Mandatory
+                                                            </td>
+                                                            <td style="padding-left:1px;font-size:14px;">
+                                                                :
+                                                            </td>
+                                                            <td style="padding-left:5px;font-size:14px;">
+                                                                <strong>True Mandatory Condition</strong>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <tr>
+                                                            <td style="padding-left:1px;font-weight:bold;font-size:14px;">
+                                                                Mandatory
+                                                            </td>
+                                                            <td style="padding-left:1px;font-size:14px;">
+                                                                :
+                                                            </td>
+                                                            <td style="padding-left:5px;font-size:14px;">
+                                                                <strong>ELSE Condition </strong>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <t t-set="i" t-value="1"/>
+                        <div class="col-xs-8 mb-1 row" style="margin:auto">
+                            <table class="table table-sm" style="border: 1px solid black !important;">
+                                <thead>
+                                    <tr style="text-align:center;font-size:14px;border: 1px solid black !important;">
+                                        <th><strong>No.</strong></th>
+                                        <th><strong>Car</strong></th>
+                                        <th><strong>Car Type</strong></th>
+                                        <th><strong>Name</strong></th>
+                                        <th><strong>Qty</strong></th>
+                                        <th><strong>Price Unit</strong></th>
+                                        <th><strong>Subtotal</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="data.service_line_ids.filtered(lambda r: r.car_type_id.name == 'Mobil Sport')" t-as="line">
+                                        <tr>
+                                            <td style="text-align:left;font-size:12px;border: 1px solid black !important;">
+                                                <span t-esc="i"/><span>.</span>
+                                                <t t-set="i" t-value="i+1"/> 
+                                            </td>
+                                            <td style="text-align:left;font-size:12px;border: 1px solid black !important;">
+                                                <t t-esc="line.car_id.name"/>
+                                            </td>
+                                            <td style="text-align:left;font-size:12px;border: 1px solid black !important;">
+                                                <t t-esc="line.car_type_id.name"/>
+                                            </td>
+                                            <td style="text-align:left;font-size:12px;border: 1px solid black !important;">
+                                                <t t-esc="line.name"/>
+                                            </td>
+                                            <td style="text-align:left;font-size:12px;border: 1px solid black !important;">
+                                                <t t-esc="line.quantity"/>
+                                            </td>
+                                            <td style="text-align:center;font-size:12px;border: 1px solid black !important;">
+                                                <t t-esc="line.price_unit"/>
+                                            </td>
+                                            <td style="text-align:center;font-size:12px;border: 1px solid black !important;">
+                                                <t t-esc="line.price_subtotal"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div>
+                            <table style="width:100%;">
+                                <tr>
+                                    <td class="float-left" style="font-size: 15px;">
+                                    </td>
+
+                                    <td class="float-right" style="font-size: 15px;">
+                                        <table style="padding-top:100px;">
+                                            <tr>
+                                                <td>
+                                                <strong>SUBTOTAL</strong>
+                                                </td>
+                                                <td style="padding-left:12px;">
+                                                    =&#160;&#160;
+                                                </td>
+                                                <td class="text-left">
+                                                    <strong><span t-esc="data.subtotal_report()"/></strong>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>       
+                            </table>
+                        </div>
+
+                    </t>
+                </t>
+            </div>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_service_service,xti_training.service_service,model_service_service,xti_training.service_manager,1,1,1,1
+
+access_service_service_user,xti_training.service_service_user,model_service_service,xti_training.service_user,1,0,0,0
+
+access_service_order_line,xti_training.service_order_line,model_service_order_line,xti_training.service_manager,1,1,1,1
+
+access_car_car,xti_training.car_car,model_car_car,xti_training.service_manager,1,1,1,1
+
+access_car_type,xti_training.car_type,model_car_type,xti_training.service_manager,1,1,1,1
+
+access_service_service_wizard,xti_training.service_service_wizard,model_service_service_wizard,base.group_user,1,1,1,1

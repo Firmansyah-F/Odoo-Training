@@ -1,0 +1,28 @@
+<odoo>
+        <record id="service_wizard_form" model="ir.ui.view">
+            <field name="name">Service Wizard Form</field>
+            <field name="model">service.service.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Service Wizard">
+                    <sheet>
+                        <group>
+                            <field name="service_id" invisible="0"/>
+                            <field name="description" required="0"/>
+                        </group>
+                        <footer>
+                            <!-- <button string="Confirm" name="action_confirm" type="object" class="btn-primary"/> -->
+                            <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="service_wizard_action" model="ir.actions.act_window">
+            <field name="name">Service Wizard Action</field>
+            <field name="res_model">service.service.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="service_wizard_form"/>
+            <field name="target">new</field>
+        </record>
+</odoo>

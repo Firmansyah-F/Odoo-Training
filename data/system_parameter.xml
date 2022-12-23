@@ -1,0 +1,18 @@
+<odoo>
+        <record id="data_url" model="ir.config_parameter">
+            <field name="key">data_url</field>
+            <field name="value">http://localhost:9091</field>
+        </record>
+        <record id="data_db" model="ir.config_parameter">
+            <field name="key">data_db</field>
+            <field name="value">training1</field>
+        </record>
+        <record id="data_username" model="ir.config_parameter">
+            <field name="key">data_username</field>
+            <field name="value">admin</field>
+        </record>
+        <record id="data_password" model="ir.config_parameter">
+            <field name="key">data_password</field>
+            <field name="value">admin</field>
+        </record>
+</odoo>
